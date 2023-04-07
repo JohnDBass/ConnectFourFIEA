@@ -23,13 +23,13 @@ vector<vector<int>>CopyBoard(vector<vector<int>>);
 const bool IsThereAWinner(vector<vector<int>>&, int);
 
 
-const int TotalRows = 6;	//Board Height
-const int TotalColumns = 7; //Board Width
+const int TotalRows = 6;	// Board Height
+const int TotalColumns = 7; // Board Width
 const int MaxTurns = TotalRows * TotalColumns;
-const int Player = 1;	//Player ID
-const int AI = 2;		//Computer ID
-const int MaxTreeDepth = 5;		//Maximum search tree depth for the MiniMax() algorithm
-vector<vector<int>> Board(TotalRows, vector<int>(TotalColumns)); //Game Board
+const int Player = 1;	// Player ID
+const int AI = 2;		// Computer ID
+const int MaxTreeDepth = 5;		// Maximum search tree depth for the MiniMax() algorithm
+vector<vector<int>> Board(TotalRows, vector<int>(TotalColumns)); // 2D int vector containing token placement data for the game 'board'
 bool GameOver = false;
 bool MaxTurnsReached = false;
 int WinningPlayer = 0;
@@ -58,7 +58,7 @@ void PlayGame()
 	PrintBoard(Board); 
 	while (!GameOver) 
 	{
-		//If we've reached the max number of turns, the game is a draw
+		// If we've reached the max number of turns, the game is a draw
 		if (CurrentTurn >= MaxTurns)	
 		{
 			MaxTurnsReached = true;
@@ -77,7 +77,7 @@ void PlayGame()
 		{ 
 			WinningPlayer = CurrentPlayer; 
 		}
-		//Flip CurrentPlayer between the AI and Player IDs to switch turns
+		// Flip CurrentPlayer between the AI and Player IDs to switch turns
 		CurrentPlayer = (CurrentPlayer == 1) ? 2 : 1;
 		CurrentTurn++;
 		cout << endl;
@@ -105,8 +105,8 @@ void PlayGame()
 	}
 }
 
-/*	Prints to the command line the contents of the passed Board vector
-		from the final row down to the first row - i.e. from Row[5] to Row[0] 
+/*	Prints to the command line the contents of the Board vector from the 'top' down,
+		i.e. from Row[5] to Row[0] 
 */
 const void PrintBoard(vector<vector<int>> &Board)
 {
@@ -169,19 +169,19 @@ int PlayerMove()
 	{
 		cout << "Please choose a column: ";
 		cin >> TempMove;
-		//Check if user input is not an integer
+		// Check if user input is not an integer
 		if (!cin) 
 		{
 			cin.clear();
 			cin.ignore(INT_MAX, '\n');
 			cout << "Please choose a value from 1 to " << TotalColumns << endl;
 		}
-		//Check if input is outside the bounds of the board
+		// Check if input is outside the bounds of the board
 		else if (TempMove < 1 || TempMove > TotalColumns)	
 		{
 			cout << "Please choose a valid column: " << endl;
 		}
-		//Check if the chosen column is full
+		// Check if the chosen column is full
 		else if (Board[TotalRows - 1][TempMove - 1] != 0) 
 		{
 			cout << "The chosen column is full, please choose again: " << endl;
@@ -207,7 +207,7 @@ int AIMove()
 
 /*	The MiniMax algorithm generates a decision tree of potential future moves, performing a Depth First Search,
 		with an initial max depth equal to MaxTreeDepth. The algorithm will score each node using the values contained in HeuristicScoreOfSet(), 
-		alternatively maximizing or minimizing the score based on the current PlayerToCheck - Depth 1 maximizes the potential AI moves by 
+		alternatively maximizing or minimizing the score based on the current PlayerToCheck: Depth 1 maximizes the potential AI moves by 
 		comparing their scores to INT_MIN, Depth 2 minimizes potential player moves by comparing those scores to INT_MAX, and so on until 
 		we reach max terminal depth or the last possible turn of the game.
 	The algorithm also utilizes Alpha Beta pruning to reduce the total number of node comparisons, saving time and memory by breaking the 
@@ -397,7 +397,7 @@ const bool IsThereAWinner(vector<vector<int>> &Board, int CurrentPlayer)
 			AdjacentPieces = 0;
 		}
 	}
-	//Check for 4 Vertical Pieces
+	// Check for 4 Vertical Pieces
 	for (int col = 0; col < TotalColumns; col++)
 	{
 		for (int row = 0; row < TotalRows - 3; row++)
@@ -410,7 +410,7 @@ const bool IsThereAWinner(vector<vector<int>> &Board, int CurrentPlayer)
 			AdjacentPieces = 0;
 		}
 	}
-	//Check for 4 diagonal downward pieces
+	// Check for 4 diagonal downward pieces
 	for (int col = 0; col < TotalColumns - 3; col++)
 	{
 		for (int row = 3; row < TotalRows; row++)
@@ -423,7 +423,7 @@ const bool IsThereAWinner(vector<vector<int>> &Board, int CurrentPlayer)
 			AdjacentPieces = 0;
 		}
 	}
-	//Check for 4 diagonal upward pieces 
+	// Check for 4 diagonal upward pieces 
 	for (int col = 0; col < TotalColumns - 3; col++)
 	{
 		for (int row = 0; row < TotalRows - 3; row++)
@@ -436,7 +436,7 @@ const bool IsThereAWinner(vector<vector<int>> &Board, int CurrentPlayer)
 			AdjacentPieces = 0;
 		}
 	}
-	return false; //Not a winner
+	return false; // Not a winner
 }
 
 int main(int argc, char *argv[])
